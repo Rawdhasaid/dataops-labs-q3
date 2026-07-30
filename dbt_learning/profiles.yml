@@ -3,7 +3,7 @@ dbt_learning:
   outputs:
     dev:
       type: postgres
-      host: "{{ env_var('POSTGRES_HOST', 'localhost') }}"
+      host: localhost
       port: "{{ env_var('POSTGRES_PORT', '5432') | int }}"
       user: "{{ env_var('POSTGRES_USER', 'dataops') }}"
       password: "{{ env_var('POSTGRES_PASSWORD', 'dataops_pass_2024') }}"
