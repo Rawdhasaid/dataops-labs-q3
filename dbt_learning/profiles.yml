@@ -9,4 +9,4 @@ dbt_learning:
       password: "{{ env_var('POSTGRES_PASSWORD', 'dataops_pass_2024') }}"
       dbname: "{{ env_var('POSTGRES_DB', 'ecommerce') }}"
       schema: public
-      threads: 4
+      threads: 4dbt
