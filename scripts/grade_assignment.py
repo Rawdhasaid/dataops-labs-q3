@@ -37,7 +37,7 @@ AIRFLOW_DAGS_DIR = os.path.join(REPO_ROOT, "airflow", "dags")
 
 # The 5 staging models (note: stg_stores, from the raw_store_locations seed).
 STAGE_MODELS = ["stg_customers", "stg_products", "stg_orders",
-                "stg_order_items", "stg_store_locations"]
+                "stg_order_items", "stg_stores"]
 
 
 # ═════════════════════════════════════════════════════════════
@@ -232,7 +232,7 @@ def grade_week_1():
     dim_cust = file_exists(os.path.join(DEV_DIR, "dim_customers.sql")) or ""
     dim_prod = file_exists(os.path.join(DEV_DIR, "dim_products.sql")) or ""
     checks.append(("1.3", *check_text_contains(
-        dim_cust, r"\|\||concat\s*\(", "dim_customers builds full_name via concatenation (|| or CONCAT)"), 5))
+        dim_cust, r"\|\|", "dim_customers builds full_name via concatenation (||)"), 5))
     checks.append(("1.3", *check_dbt_result(results, "dim_customers", "dim_customers builds successfully"), 5))
     checks.append(("1.3", *check_text_contains(
         dim_prod, r"unit_margin", "dim_products has unit_margin"), 5))

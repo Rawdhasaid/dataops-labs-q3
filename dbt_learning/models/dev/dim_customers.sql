@@ -6,9 +6,9 @@ with customers as
 dim_customers as ( 
 select 
 	customer_id,
-	TRIM(CONCAT(first_name, ' ', last_name)) AS full_name,
-	customer_email,
-	phone_number, 
+	TRIM(first_name || ' ' || last_name AS full_name) AS full_name,
+	email,
+	phone, 
 	country,
 	city,
 	signup_date
