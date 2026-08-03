@@ -1,6 +1,6 @@
 with stores as 
 ( 
-	select * from {{ ref('stg_store_locations') }}
+	select * from {{ ref('stg_stores') }}
 ), 
 
 dim_stores as ( 

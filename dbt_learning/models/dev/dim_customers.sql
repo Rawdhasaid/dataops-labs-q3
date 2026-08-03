@@ -6,7 +6,7 @@ with customers as
 dim_customers as ( 
 select 
 	customer_id,
-	TRIM(first_name || ' ' || last_name AS full_name) AS full_name,
+	TRIM(first_name || ' ' || last_name )AS full_name,
 	email,
 	phone, 
 	country,
