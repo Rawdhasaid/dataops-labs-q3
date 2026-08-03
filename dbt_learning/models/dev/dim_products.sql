@@ -9,7 +9,7 @@ select
 	product_name,
 	category,
 	subcategory, 
-	unit_margin = list_price - cost_price
+	list_price - cost_price as unit_margin
 	from products 
 	) 
 	select * from dim_products
