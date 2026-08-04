@@ -12,10 +12,10 @@ SELECT
     o.order_date,
     o.order_status,
     p.cost_price,
-    oi.quantity * oi.unit_price AS gross_amount,
-    oi.quantity * oi.unit_price * oi.discount_pct / 100 AS discount_amount,
-    oi.quantity * oi.unit_price * (1 - oi.discount_pct / 100) AS net_amount,
-    oi.quantity * p.cost_price AS total_cost
+    cast(oi.quantity * oi.unit_price AS numeric(12,2)) AS gross_amount,
+    cast(oi.quantity * oi.unit_price * oi.discount_pct / 100 AS numeric(12,2)) AS discount_amount,
+    cast(oi.quantity * oi.unit_price * (1 - oi.discount_pct / 100) AS numeric(12,2)) AS net_amount,
+    cast(oi.quantity * p.cost_price AS numeric(12,2)) AS total_cost
     FROM {{ ref('stg_order_items') }} oi
     JOIN {{ ref('stg_orders') }} o
     ON oi.order_id = o.order_id
