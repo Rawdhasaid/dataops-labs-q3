@@ -1,3 +1,9 @@
+{{ config(
+    materialized='incremental',
+    unique_key='order_item_id'
+) }}
+
+
 with main as (
 SELECT
     oi.order_item_id,
@@ -19,4 +25,8 @@ SELECT
 select *,
     net_amount - total_cost AS margin
 from main
+
+{% if is_incremental() %}
+    where order_item_id > (select coalesce(max(order_item_id), 0) from {{ this }})
+{% endif %}
 
