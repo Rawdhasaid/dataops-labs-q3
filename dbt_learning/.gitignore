@@ -5,3 +5,5 @@ target/*
 !target/catalog.json
 dbt_packages/
 logs/
+
+.dlt/secrets.toml
