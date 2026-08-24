@@ -1,18 +1,50 @@
 with source as (
-    select * from {{ ref('raw_orders') }}
+
+    select *
+    from {{ ref('raw_orders') }}
+
 ),
 
 cleaned_orders as (
 
     select
-        order_id::integer                               as order_id,
-        trim(customer_id)::text                         as customer_id,
-        order_date::date                                as order_date,
-        lower(trim(status))::text                       as order_status,
-        trim(store_id)::text                            as store_id,
-        coalesce(shipping_fee, 0)::numeric(12,2)        as shipping_fee,
-		cast(upper(trim(currency)) as varchar(3))       as currency_code
+        order_id::integer                         as order_id,
+        trim(customer_id)::text                   as customer_id,
+        order_date::date                          as order_date,
+        lower(trim(status))::text                 as order_status,
+        trim(store_id)::text                      as store_id,
+        coalesce(shipping_fee, 0)::numeric(12, 2) as shipping_fee,
+        cast(upper(trim(currency)) as varchar(3))  as currency_code
     from source
 
+),
+
+ranked as (
+
+    select
+        *,
+        row_number() over (
+            partition by order_id
+            order by order_date desc
+        ) as row_number
+    from cleaned_orders
+
+),
+
+deduplicated_orders as (
+
+    select
+        order_id,
+        customer_id,
+        order_date,
+        order_status,
+        store_id,
+        shipping_fee,
+        currency_code
+    from ranked
+    where row_number = 1
+
 )
-select * from cleaned_orders
+
+select *
+from deduplicated_orders
