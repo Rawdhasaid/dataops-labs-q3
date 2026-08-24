@@ -6,6 +6,10 @@ version: "1.0.0"
 
 profile: "dbt_learning"
 
+data_tests:
+  dbt_learning:
+    +store_failures: true
+
 # ── Path configuration ────────────────────────────────────────
 model-paths: ["models"]
 analysis-paths: ["analyses"]
