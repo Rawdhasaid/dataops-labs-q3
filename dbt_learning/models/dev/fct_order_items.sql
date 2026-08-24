@@ -17,9 +17,9 @@ SELECT
     cast(oi.quantity * oi.unit_price * (1 - oi.discount_pct / 100) AS numeric(12,2)) AS net_amount,
     cast(oi.quantity * p.cost_price AS numeric(12,2)) AS total_cost
     FROM {{ ref('stg_order_items') }} oi
-    JOIN {{ ref('stg_orders') }} o
+    LEFT JOIN {{ ref('stg_orders') }} o
     ON oi.order_id = o.order_id
-    JOIN {{ ref('stg_products') }} p
+    LEFT JOIN {{ ref('stg_products') }} p
     ON oi.product_id = p.product_id
 )
 select *,

@@ -5,7 +5,7 @@ with source as (
 
 ),
 
-cleaned_orders as (
+cleaned as (
 
     select
         order_id::integer                         as order_id,
@@ -26,12 +26,12 @@ ranked as (
         row_number() over (
             partition by order_id
             order by order_date desc
-        ) as row_number
-    from cleaned_orders
+        ) as rn
+    from cleaned
 
 ),
 
-deduplicated_orders as (
+deduped as (
 
     select
         order_id,
@@ -42,9 +42,9 @@ deduplicated_orders as (
         shipping_fee,
         currency_code
     from ranked
-    where row_number = 1
+    where rn = 1
 
 )
 
 select *
-from deduplicated_orders
+from deduped
