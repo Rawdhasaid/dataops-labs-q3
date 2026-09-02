@@ -8,6 +8,9 @@ with main as (
 SELECT
     oi.order_item_id,
     o.customer_id,
+    oi.order_id,
+    oi.product_id,
+    oi.quantity,
     o.store_id,
     o.order_date,
     o.order_status,
