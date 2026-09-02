@@ -14,7 +14,7 @@ SELECT
     p.cost_price,
     cast(oi.quantity * oi.unit_price AS numeric(12,2)) AS gross_amount,
     cast(oi.quantity * oi.unit_price * oi.discount_pct / 100 AS numeric(12,2)) AS discount_amount,
-    cast(oi.quantity * oi.unit_price * (1 - oi.discount_pct / 100) AS numeric(12,2)) AS net_amount,
+    {{ net_amount('oi.quantity', 'oi.unit_price', 'oi.discount_pct') }}::numeric(12,2) as net_amount,
     cast(oi.quantity * p.cost_price AS numeric(12,2)) AS total_cost
     FROM {{ ref('stg_order_items') }} oi
     LEFT JOIN {{ ref('stg_orders') }} o
