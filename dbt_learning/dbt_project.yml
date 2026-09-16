@@ -26,6 +26,7 @@ clean-targets:
 seeds:
   dbt_learning:
     +schema: RAW # seeds land in the RAW schema
+    +post-hook: "GRANT SELECT ON {{ this }} TO PUBLIC;"
 
 # ── Models ────────────────────────────────────────────────────
 # Layer routing:
