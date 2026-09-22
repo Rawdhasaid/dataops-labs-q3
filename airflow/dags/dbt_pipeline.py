@@ -31,6 +31,8 @@ DBT_DIR = "/opt/airflow/dbt"
 default_args = {
     "owner": "Rawdha",          # ← replace with your name
     "depends_on_past": False,
+    "retries": 2,
+    "retry_delay": timedelta(minutes=5),
     # TODO (Task 6.3): give every task two retries, five minutes apart.
     #   `timedelta` is already imported above.
 }
@@ -50,7 +52,8 @@ with DAG(
     description="Daily dbt pipeline: seed -> test sources -> stage -> dev",
     default_args=default_args,
     start_date=datetime(2026, 9, 1),
-    schedule="0 6 * * *",             # daily at 06:00 UTC (Airflow cron is UTC)
+    schedule="0 6 * * *",   
+    catchup=False,          # daily at 06:00 UTC (Airflow cron is UTC)
     # TODO (Task 6.3): stop Airflow backfilling every run since start_date.
     tags=["dbt", "dataops"],
 ) as dag:
