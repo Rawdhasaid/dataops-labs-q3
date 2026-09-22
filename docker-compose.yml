@@ -18,6 +18,7 @@ x-airflow-common: &airflow-common
   image: dataops-airflow:2.10.5   # named so all 3 services reuse one build
   env_file: .env
   environment:
+    POSTGRES_HOST: postgres
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-dataops}:${POSTGRES_PASSWORD:-dataops_pass_2024}@postgres:5432/airflow_db
     AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:-46BKJoQYlPPOexq0OhDZnIlNepKFf87WFwLbfzqDDho=}
