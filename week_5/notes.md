@@ -1,0 +1,4 @@
+The execution time was slightly lower after creating the index, but PostgreSQL still chose sequential scans instead of an index scan.This is because the tables are very small, with only around 313 rows in fct_order_items and 155 rows in fct_orders. For small tables, PostgreSQL may decide that scanning the whole table is cheaper than using an index.
+The Excution Times Before The Index Are 1:1.093 ms , 2:0.359 ms , 3:0.835 ms 
+The Excution Times After The Index Are  1:0.340 ms , 2:0.456 ms , 3:0.460 ms  
+Lines :         ->  Seq Scan on fct_orders o  (cost=0.00..3.55 rows=155 width=64) (actual time=0.009..0.029 rows=155 loops=1) &&    ->  Seq Scan on fct_order_items f  (cost=0.00..11.13 rows=313 width=75) (actual time=0.009..0.049 rows=313 loops=1)  shows that the full tables were scanned rather than using the index. 
