@@ -29,7 +29,7 @@ from airflow.operators.bash import BashOperator
 DBT_DIR = "/opt/airflow/dbt"
 
 default_args = {
-    "owner": "student_name",          # ← replace with your name
+    "owner": "Rawdha",          # ← replace with your name
     "depends_on_past": False,
     # TODO (Task 6.3): give every task two retries, five minutes apart.
     #   `timedelta` is already imported above.
@@ -61,6 +61,7 @@ with DAG(
     dbt_test_stage = dbt_task(dag, "dbt_test_stage", "test --select stage")
     dbt_run_dev = dbt_task(dag, "dbt_run_dev", "run --select dev")
     dbt_test_dev = dbt_task(dag, "dbt_test_dev", "test --select dev")
+    dbt_build = dbt_task(dag, "dbt_build", "build")
 
     # TODO (Task 6.2): add a task that runs `dbt build`, then wire it onto the
     #   end of the chain below with `>>`.
@@ -73,4 +74,5 @@ with DAG(
         >> dbt_test_stage
         >> dbt_run_dev
         >> dbt_test_dev
+        >> dbt_build
     )
